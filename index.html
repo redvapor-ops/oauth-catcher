@@ -1,0 +1,46 @@
+<!doctype html>
+  <html lang="th">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OAuth code catcher</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #111; color: #eee; margin: 0; display:
+  flex; min-height: 100vh; align-items: center; justify-content: center; }
+    .box { max-width: 640px; width: 90%; background: #1b1b1b; border: 1px solid #333; border-radius: 14px; padding:
+  28px; }
+    h1 { font-size: 18px; margin: 0 0 14px; }
+    .code { font-family: ui-monospace, Menlo, monospace; font-size: 15px; word-break: break-all; background:
+  #0c0c0c; border: 1px solid #2a2a2a; border-radius: 9px; padding: 14px; color: #8fbf8f; }
+    button { margin-top: 14px; padding: 10px 18px; font-size: 14px; border-radius: 9px; border: 1px solid #444;
+  background: #d97757; color: #111; font-weight: 700; cursor: pointer; }
+    .none { color: #fb5; }
+    p { color: #9a9a9a; font-size: 13px; line-height: 1.5; }
+  </style>
+  </head>
+  <body>
+    <div class="box">
+      <h1>🔑 OAuth code catcher</h1>
+      <div id="out" class="code">…</div>
+      <button id="copy" style="display:none">คัดลอก code</button>
+      <p id="hint"></p>
+    </div>
+  <script>
+    var p = new URLSearchParams(location.search);
+    var code = p.get("code");
+    var out = document.getElementById("out");
+    var btn = document.getElementById("copy");
+    var hint = document.getElementById("hint");
+    if (code) {
+      out.textContent = code;
+      btn.style.display = "inline-block";
+      btn.onclick = function () { navigator.clipboard.writeText(code).then(function(){ btn.textContent = "คัดลอกแล้ว
+  ✓"; }); };
+      hint.textContent = "เอา code ไปวางใน helper";
+    } else {
+      out.className = "code none";
+      out.textContent = "ไม่พบ ?code= ใน URL";
+    }
+  </script>
+  </body>
+  </html>
